@@ -1,0 +1,71 @@
+﻿@model LiteCommerce.DomainModels.Customer
+
+<form method="post" action="~/Customer/Save">
+    <div class="text-danger form-group">
+        @Html.ValidationSummary()
+    </div>
+    @Html.HiddenFor(m => m.CustomerID)
+    <div class="form-group">
+        <label>Tên khách hàng:</label>
+        @Html.TextBoxFor(m => m.CustomerName, new { @class = "form-control", @autofocus = "autofocus" })
+        <div class="text-danger">@Html.ValidationMessageFor(m => m.CustomerName)</div>
+    </div>
+    <div class="form-group">
+        <label>Tên giao dịch:</label>
+        @Html.TextBoxFor(m => m.ContactName, new { @class = "form-control" })
+        <div class="text-danger">@Html.ValidationMessageFor(m => m.ContactName)</div>
+    </div>
+    <div class="form-group">
+        <label>Địa chỉ liên hệ:</label>
+        @Html.TextBoxFor(m => m.Address, new { @class = "form-control" })
+        @*<input type="text" class="form-control" name="Address" id="Address">*@
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Quốc gia:</label>
+                @Html.DropDownListFor(m => m.Country, SelectListHelpers.Countries(), new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Thành phố:</label>
+                @Html.DropDownListFor(m => m.City, SelectListHelpers.Cities(), new { @class = "form-control" })
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label>Mã bưu chính:</label>
+        @Html.TextBoxFor(m => m.PostalCode, new { @class = "form-control" })
+        @*<input type="text" class="form-control" name="PostalCode" id="PostalCode">*@
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Email:</label>
+                @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                @*<input type="text" class="form-control" name="PostalCode" id="PostalCode">*@
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Điện thoại:</label>
+                @Html.TextBoxFor(m => m.Password, new { @class = "form-control" })
+                @*<input type="text" class="form-control" name="Phone" id="Phone">*@
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <button type="submit" class="btn btn-primary">
+                <i class="fa fa-save"></i> Lưu dữ liệu
+            </button>
+        </div>
+        <div class="col-md-6 text-right">
+            <a href="~/Customer/Index" class="btn btn-warning">
+                <i class="fa fa-window-close"></i> Bỏ qua
+            </a>
+        </div>
+    </div>
+</form>
+
