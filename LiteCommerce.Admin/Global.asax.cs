@@ -27,7 +27,7 @@ namespace LiteCommerce.Admin
             ProductService.Init(DatabaseTypes.SQLServer, connectionString);
             ReportSercvice.Init(DatabaseTypes.SQLServer, connectionString);
             SellService.Init(DatabaseTypes.SQLServer, connectionString);
-
+            AccountService.Init(DatabaseTypes.SQLServer, connectionString, AccountTypes.Employee);
         }
     }
 }

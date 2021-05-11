@@ -1,0 +1,69 @@
+﻿@*@model IEnumerable<LiteCommerce.DomainModels.Product>*@
+@model LiteCommerce.Admin.Models.ProductPaginationQueryResult
+@{
+    Layout = null;
+}
+
+
+<div class="text-left">
+    <p>Có tất cả <strong>@Model.RowCount</strong> mặt hàng. Bạn đang ở trang <strong>@Model.Page</strong> trên tổng số <strong>@Model.PageCount</strong> trang.</p>
+</div>
+
+<table class="table table-bordered table-hover table-striped">
+    <thead>
+        <tr>
+            <th>Tên hàng</th>
+            <th>Đơn vị tính</th>
+            <th>Giá hàng</th>
+            <th>Ảnh minh họa</th>
+            <th class="text-right">
+                <a href="~/Product/Add" class="btn btn-xs btn-primary">
+                    <i class="fa fa-plus"></i>
+                </a>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Data)
+        {
+            <tr>
+                <td>
+                    <a href="~/Product/Details/@item.ProductID">@item.ProductName</a>
+                </td>
+                <td>@item.Unit </td>
+                <td>@item.Price</td>
+                <td>
+                    <img src="@item.Photo" />
+                </td>
+                <td class="text-right">
+                    <a href="~/Product/Edit/@item.ProductID" class="btn btn-xs btn-info">
+                        <i class="fa fa-edit"></i>
+                    </a>
+                    <a href="~/Product/Delete/@item.ProductID" class="btn btn-xs btn-danger">
+                        <i class="fa fa-remove"></i>
+                    </a>
+                </td>
+            </tr>
+
+        }
+    </tbody>
+</table>
+
+    <div class="text-center">
+        <ul class="pagination">
+            <li><a href="#">&lt;&lt;</a></li>
+            @for (int i = 1; i <= Model.PageCount; i++)
+            {
+                if (i == Model.Page)
+                {
+                    <li class="active"><a href="#">@i</a></li>
+                }
+                else
+                {
+                    <li><a href="~/Product/Index?page=@i&searchValue=@Model.SearchValue">@i</a></li>
+                }
+
+            }
+            <li><a href="#">&gt;&gt;</a></li>
+        </ul>
+    </div>

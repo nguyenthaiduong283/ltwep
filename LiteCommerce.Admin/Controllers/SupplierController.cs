@@ -8,6 +8,7 @@ using System.Web.Mvc;
 
 namespace LiteCommerce.Admin.Controllers
 {
+    [Authorize]
     public class SupplierController : Controller
     {
         // GET: Supplier

@@ -1,0 +1,74 @@
+﻿@model LiteCommerce.DomainModels.Product
+@{
+    ViewBag.Title = "Quản lý danh mục hàng hóa";
+}
+<!-- Form để tìm kiếm -->
+<div class="container-fluid">
+    <form id="formSearchInput">
+        <div class="row">
+            <div class="col-md-6">
+                 @*@Html.DropDownListFor(m => m.CategoryID, SelectListHelpers.Categories(), new { @class = "form-control" })*@
+
+                <select name="CategoryID" class="form-control">
+                    <option value="0">--Tat ca loai hang --</option>
+                    <option value="1">Beverages</option>
+                    <option value="2">Condiments</option>
+                </select>
+            </div>
+            <div class="col-md-6">
+                @*@Html.DropDownListFor(m => m.SupplierID, SelectListHelpers.Suppliers(), new { @class = "form-control" })*@
+                
+                <select name="SupplierID" class="form-control">
+                    <option value="0">--Tat ca nha cung cap --</option>
+                    <option value="1">Exotic Liquid</option>
+                    <option value="2">Tokyo Traders</option>
+                    <option value="3">Pavlova, Ltd.</option>
+                </select>
+            </div>
+       </div>
+        <div class="row" style="margin-top:5px">
+            <div class="col-md-12">
+                <div class="input-group">
+                    <input name="searchValue" type="text" class="form-control" placeholder="Nhập tên cần tìm..." value="">
+                    <div class="input-group-btn">
+                        <button class="btn btn-primary" type="submit">
+                            <i class="glyphicon glyphicon-search"></i> Tìm kiếm
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div id="listProducts" class="container-fluid">
+
+</div>
+
+@section scripts {
+    <script>
+        function getProducts(page) {
+            var searchCondition = $("#formSearchInput").serializeArray();
+            searchCondition.push({ name: "page", value: page });
+            $.ajax({
+                url: "/Product/List",
+                type: "POST",
+                data: searchCondition,
+                success: function (data) {
+                    $("#listProducts").empty();
+                    $("#listProducts").html(data);
+                }
+            });
+        }
+
+        $(document).ready(function () {
+            getProducts(1);
+            $("#formSearchInput").submit(function (e) {
+                e.preventDefault();
+                getProducts(1);
+            });
+
+        });
+
+    </script>
+}

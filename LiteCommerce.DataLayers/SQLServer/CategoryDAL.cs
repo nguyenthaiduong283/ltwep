@@ -148,7 +148,31 @@ namespace LiteCommerce.DataLayers.SQLServer
         /// <returns></returns>
         public List<Category> List()
         {
-            throw new NotImplementedException();
+            List<Category> data = new List<Category>();
+            using (SqlConnection cn = GetConnection())
+            {
+                SqlCommand cmd = new SqlCommand();
+                cmd.CommandText = "select * from Categories";
+                cmd.CommandType = System.Data.CommandType.Text;
+                cmd.Connection = cn;
+
+                using (SqlDataReader dbReader = cmd.ExecuteReader(CommandBehavior.CloseConnection))
+                {
+                    while (dbReader.Read())
+                    {
+
+                        data.Add(new Category()
+                        {
+                            CategoryID = Convert.ToInt32(dbReader["CategoryID"]),
+                            CategoryName = Convert.ToString(dbReader["CategoryName"])
+                        }
+                        );
+                    }
+                }
+
+                cn.Close();
+            }
+            return data;
         }
         /// <summary>
         /// 

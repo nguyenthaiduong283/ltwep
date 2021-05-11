@@ -20,6 +20,7 @@ namespace LiteCommerce.BusinessLayers
         private static ICategoryDAL CategoryDB;
         private static ICustomerDAL CustomerDB;
         private static IEmployeeDAL EmployeeDB;
+        private static IProductDAL ProductDB;
 
         /// <summary>
         /// Khởi tạo tính năng tác nghiệp (Hàm này phải được gọi nếu muốn sử dụng các tính năng của lớp)
@@ -38,6 +39,7 @@ namespace LiteCommerce.BusinessLayers
                     CustomerDB = new DataLayers.SQLServer.CustomerDAL(connectionString);
                     EmployeeDB = new DataLayers.SQLServer.EmployeeDAL(connectionString);
                     ShipperDB = new DataLayers.SQLServer.ShipperDAL(connectionString);
+                    ProductDB = new DataLayers.SQLServer.ProductDAL(connectionString);
                     break;
                 default:
                     throw new Exception("Database Type is not Supported");
@@ -53,6 +55,16 @@ namespace LiteCommerce.BusinessLayers
         public static List<Country> ListCountries()
         {
             return CountryDB.List();
+        }
+
+        public static List<Category> ListCategories()
+        {
+            return CategoryDB.List();
+        }
+
+        public static List<Supplier> ListSuppliers()
+        {
+            return SupplierDB.List();
         }
         /// <summary>
         /// Danh sách thành phố
@@ -71,6 +83,8 @@ namespace LiteCommerce.BusinessLayers
         {
             return CityDB.List(countryName);
         }
+
+        //-----------------------------------------------------------------------------------------------------//
         /// <summary>
         /// Danh sách Nhà cung cấp (phân trang, tìm kiếm)
         /// </summary>
@@ -324,6 +338,9 @@ namespace LiteCommerce.BusinessLayers
 
         //---------------------------------------------END SHIPPER-----------------------------------------//
 
+
+
+        
 
     }
 }

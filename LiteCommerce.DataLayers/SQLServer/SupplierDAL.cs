@@ -149,7 +149,31 @@ namespace LiteCommerce.DataLayers.SQLServer
         /// <returns></returns>
         public List<Supplier> List()
         {
-            return List();
+            List<Supplier> data = new List<Supplier>();
+            using (SqlConnection cn = GetConnection())
+            {
+                SqlCommand cmd = new SqlCommand();
+                cmd.CommandText = "select * from Suppliers";
+                cmd.CommandType = System.Data.CommandType.Text;
+                cmd.Connection = cn;
+
+                using (SqlDataReader dbReader = cmd.ExecuteReader(CommandBehavior.CloseConnection))
+                {
+                    while (dbReader.Read())
+                    {
+
+                        data.Add(new Supplier()
+                        {
+                            SupplierID = Convert.ToInt32(dbReader["SupplierID"]),
+                            SupplierName = Convert.ToString(dbReader["SupplierName"])
+                        }
+                        );
+                    }
+                }
+
+                cn.Close();
+            }
+            return data;
         }
         /// <summary>
         /// 
