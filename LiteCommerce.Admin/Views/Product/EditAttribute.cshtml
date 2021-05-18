@@ -1,0 +1,42 @@
+﻿@model LiteCommerce.DomainModels.ProductAttribute
+
+<form method="post" action="~/Product/SaveAttributes">
+    <div class="text-danger form-group">
+        @Html.ValidationSummary()
+    </div>
+    @Html.HiddenFor(m => m.AttributeID)
+    @Html.HiddenFor(m => m.ProductID)
+    <div class="form-group">
+        <label>Tên thuộc tính:</label>
+        @Html.TextBoxFor(m => m.AttributeName, new { @class = "form-control", @autofocus = "autofocus" })
+        <div class="text-danger">@Html.ValidationMessageFor(m => m.AttributeName)</div>
+
+    </div>
+    <div class="form-group">
+        <label>Giá trị thuộc tính:</label>
+        @Html.TextBoxFor(m => m.AttributeValue, new { @class = "form-control" })
+        <div class="text-danger">@Html.ValidationMessageFor(m => m.AttributeValue)</div>
+
+    </div>
+    <div class="form-group">
+        <label>Thứ tự hiển thị:</label>
+        @Html.TextBoxFor(m => m.DisplayOrder, new { @class = "form-control" })
+        <div class="text-danger">@Html.ValidationMessageFor(m => m.DisplayOrder)</div>
+
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <button type="submit" class="btn btn-primary">
+                <i class="fa fa-save"></i> Lưu dữ liệu
+            </button>
+        </div>
+        <div class="col-md-6 text-right">
+            <a href="~/Product" class="btn btn-warning">
+                <i class="fa fa-window-close"></i> Bỏ qua
+            </a>
+        </div>
+    </div>
+</form>
+
+

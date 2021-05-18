@@ -7348,6 +7348,15 @@
     <Content Include="Views\Product\List.cshtml" />
     <Content Include="Views\Product\Edit.cshtml" />
     <Content Include="Views\Product\Delete.cshtml" />
+    <Content Include="Views\Supplier\List.cshtml" />
+    <Content Include="Views\Shipper\List.cshtml" />
+    <Content Include="Views\Employee\List.cshtml" />
+    <Content Include="Views\Customer\List.cshtml" />
+    <Content Include="Views\Category\List.cshtml" />
+    <Content Include="Views\Product\EditAttribute.cshtml" />
+    <Content Include="Views\Product\EditGallery.cshtml" />
+    <Content Include="Views\Product\Add.cshtml" />
+    <Content Include="Views\Product\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

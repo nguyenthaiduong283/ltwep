@@ -21,18 +21,7 @@ namespace LiteCommerce.Admin.Controllers
         {
             try
             {
-                /*int rowCount = 0;
-                int pageSize = 10;
-                var model = ProductService.List(page, pageSize, CategoryID, SupplierID, searchValue, out rowCount);
-                ViewBag.RowCount = rowCount;
-                ViewBag.Page = page;
-
-                int pageCount = rowCount /pageSize;
-                if (rowCount % pageSize > 0)
-                    pageCount++;
-                ViewBag.PageCount = pageCount;
-
-                return View(model);*/
+                
 
                 int rowCount = 0;
                 int pageSize = 10;
@@ -56,8 +45,8 @@ namespace LiteCommerce.Admin.Controllers
 
         public ActionResult Edit(int id)
         {
-            ViewBag.Title = "Thay đổi thông tin hàng hóa";
-            var model = ProductService.Get(id);
+            ViewBag.Title = "Cập nhật thông tin mặt hàng";
+            var model = ProductService.GetEx(id);
             if (model == null)
                 RedirectToAction("Index");
             return View(model);
@@ -71,7 +60,7 @@ namespace LiteCommerce.Admin.Controllers
                 ProductID = 0
             };
 
-            return View("Edit", model);
+            return View(model);
         }
 
 
@@ -123,11 +112,17 @@ namespace LiteCommerce.Admin.Controllers
                         ViewBag.Title = "Bổ sung hàng hóa";
                     else
                         ViewBag.Title = "Thay đổi thông tin hàng hóa";
-                    return View("Edit", data);
+                    return View("Add", data);
                 }
 
                 if (data.ProductID == 0)
-                    ProductService.Add(data);
+                {
+                    
+                    var id=ProductService.Add(data);
+                    var model = ProductService.GetEx(id);
+                    return View("Edit", model);
+                }
+                    
                 else
                     ProductService.Update(data);
 
@@ -138,5 +133,149 @@ namespace LiteCommerce.Admin.Controllers
                 return Content("Oops! Trang nay khong ton tai :)");
             }
         }
+        //-----------------------------------Attribute------------------------------------------------------------//
+        
+        public ActionResult AddAttribute(int id )
+        {
+            ViewBag.Title = "Thêm thông tin thuộc tính";
+            ProductAttribute model = new ProductAttribute()
+            {
+                AttributeID = 0,
+                ProductID = id
+            };
+            return View("EditAttribute", model);
+        }
+        public ActionResult EditAttribute(int id)
+        {
+            ViewBag.Title = "Cập nhật thông tin thuộc tính";
+            var model = ProductService.GetAttribute(id);
+            if (model == null)
+                RedirectToAction("Index");
+            return View(model);
+        }
+
+        public ActionResult DeleteAttributes(int id, long[] attributeIds)
+        {
+            if (attributeIds == null)
+                return RedirectToAction("Edit", new { id = id });
+            ProductService.DeleteAttribute(attributeIds);
+            return RedirectToAction("Edit", new { id = id });
+        }
+
+        public ActionResult SaveAttributes(ProductAttribute data)
+        {
+            try
+            {
+                //return Json(data);
+                if (string.IsNullOrWhiteSpace(Convert.ToString(data.ProductID)))
+                    ModelState.AddModelError("ProductID", "Vui lòng nhập tên hàng !");
+                if (string.IsNullOrWhiteSpace(data.AttributeName))
+                    ModelState.AddModelError("AttributeName", "Bạn chưa nhập tên thuộc tính !");
+                if (string.IsNullOrWhiteSpace(data.AttributeValue))
+                    ModelState.AddModelError("AttributeValue", "Bạn chưa nhập giá trị thuộc tính !");
+                
+                if (string.IsNullOrWhiteSpace(Convert.ToString(data.DisplayOrder)))
+                    ModelState.AddModelError("DisplayOrder", "Bạn chưa nhập thứ tự hiển thị ");
+
+
+                if (!ModelState.IsValid)
+                {
+                    if (data.AttributeID == 0)
+                        ViewBag.Title = "Bổ sung thuộc tính";
+                    else
+                        ViewBag.Title = "Thay đổi thông tin thuộc tính";
+                    return View("EditAttribute", data);
+                }
+
+                if (data.AttributeID == 0)
+                    ProductService.AddAttribute(data);
+                else
+                    ProductService.UpdateAttribute(data);
+
+                return RedirectToAction("Edit", new { id = data.ProductID });
+            }
+            catch
+            {
+                return Content("Oops! Trang nay khong ton tai :)");
+            }
+        }
+
+
+        //-------------------------------------Gallery----------------------------------------------------------------//
+        public ActionResult AddGallery(int id)
+        {
+            ViewBag.Title = "Thêm thông tin thư viện sản phẩm";
+            ProductGallery model = new ProductGallery()
+            {
+                GalleryID = 0,
+                ProductID = id
+            };
+            return View("EditGallery", model);
+        }
+        public ActionResult EditGallery(int id)
+        {
+            ViewBag.Title = "Cập nhật thông tin thư viện sản phẩm";
+            var model = ProductService.GetGallery(id);
+            if (model == null)
+                RedirectToAction("Index");
+            return View(model);
+        }
+
+        public ActionResult DeleteGalleries(int id, long[]galleryId)
+        {
+            if (galleryId == null)
+                return RedirectToAction("Edit", new { id = id });
+            ProductService.DeleteGalleries(galleryId);
+            return RedirectToAction("Edit", new { id = id });
+        }
+
+        public ActionResult SaveGallery(ProductGallery data)
+        {
+            try
+            {
+                //return Json(data);
+                if (string.IsNullOrWhiteSpace(Convert.ToString(data.ProductID)))
+                    ModelState.AddModelError("ProductID", "Vui lòng nhập tên hàng !");
+                if (string.IsNullOrWhiteSpace(data.Photo))
+                    ModelState.AddModelError("Photo", "Bạn chưa nhập ảnh !");
+                if (string.IsNullOrWhiteSpace(data.Description))
+                    ModelState.AddModelError("Description", "Bạn chưa nhập mô tả!");
+
+                if (string.IsNullOrWhiteSpace(Convert.ToString(data.DisplayOrder)))
+                    ModelState.AddModelError("DisplayOrder", "Bạn chưa nhập thứ tự hiển thị ");
+                if (string.IsNullOrWhiteSpace(Convert.ToString(data.IsHidden)))
+                    ModelState.AddModelError("IsHidden", "Bạn chưa nhập..... ");
+
+                if (!ModelState.IsValid)
+                {
+                    if (data.GalleryID == 0)
+                        ViewBag.Title = "Bổ sung thư viện của sản phẩm";
+                    else
+                        ViewBag.Title = "Thay đổi thông tin thư viện sản phẩm";
+                    return View("EditGallery", data);
+                }
+
+                if (data.GalleryID == 0)
+                    ProductService.AddGallery(data);
+                else
+                    ProductService.UpdateGallery(data);
+
+                return RedirectToAction("Edit", new { id = data.ProductID });
+            }
+            catch
+            {
+                return Content("Oops! Trang nay khong ton tai :)");
+            }
+        }
+
+        public ActionResult Details(int id)
+        {
+            ViewBag.Title = "Chi tiết thông tin mặt hàng";
+            var model = ProductService.GetEx(id);
+            if (model == null)
+                RedirectToAction("Index");
+            return View(model);
+        }
     }
+
 }

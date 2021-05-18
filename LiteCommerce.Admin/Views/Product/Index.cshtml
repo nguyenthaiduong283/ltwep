@@ -7,25 +7,38 @@
     <form id="formSearchInput">
         <div class="row">
             <div class="col-md-6">
-                 @*@Html.DropDownListFor(m => m.CategoryID, SelectListHelpers.Categories(), new { @class = "form-control" })*@
-
+                @*@Html.DropDownListFor(m => m.CategoryID, SelectListHelpers.Categories(), new { @class = "form-control" })*@
                 <select name="CategoryID" class="form-control">
                     <option value="0">--Tat ca loai hang --</option>
                     <option value="1">Beverages</option>
                     <option value="2">Condiments</option>
+                    <option value="3">Confections</option>
+                    <option value="4">Dairy Products</option>
+                    <option value="5">Grains/Cereals</option>
+                    <option value="6">Meat/Poultry</option>
+                    <option value="7">Produce</option>
+                    <option value="8">Seafood</option>
                 </select>
+
             </div>
             <div class="col-md-6">
                 @*@Html.DropDownListFor(m => m.SupplierID, SelectListHelpers.Suppliers(), new { @class = "form-control" })*@
-                
+
                 <select name="SupplierID" class="form-control">
                     <option value="0">--Tat ca nha cung cap --</option>
                     <option value="1">Exotic Liquid</option>
-                    <option value="2">Tokyo Traders</option>
-                    <option value="3">Pavlova, Ltd.</option>
+                    <option value="2">Lyngbysild</option>
+                    <option value="3">Karkki Oy</option>
+                    <option value="4">Ma Maison</option>
+                    <option value="5">Mayumi's</option>
+                    <option value="6">Pavlova, Ltd.</option>
+                    <option value="7">Specialty Biscuits, Ltd.</option>
+                    <option value="8">Bigfoot Breweries</option>
+                    <option value="9">Leka Trading</option>
+
                 </select>
             </div>
-       </div>
+        </div>
         <div class="row" style="margin-top:5px">
             <div class="col-md-12">
                 <div class="input-group">
